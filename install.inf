@@ -1,9 +1,9 @@
 [info]
 title=Stata Helper
-desc=Adds commands for Stata lexer, see details in readme file
+desc=Gives commands for Stata lexer, see details in readme file
 type=cudatext-plugin
 subdir=cuda_stata_helper
-homepage=
+homepage=https://github.com/CudaText-addons/cuda_stata_helper
 
 [item1]
 section=events
@@ -17,5 +17,3 @@ section=commands
 caption=Stata Helper\Execute current text
 method=exec_file
 lexers=Stata
-hotkey=Ctrl+D
-
