@@ -1,0 +1,21 @@
+[info]
+title=Stata Helper
+desc=Adds commands for Stata lexer, see details in readme file
+type=cudatext-plugin
+subdir=cuda_stata_helper
+homepage=
+
+[item1]
+section=events
+events=on_key
+lexers=Stata
+#code of tick-char
+keys=192
+
+[item2]
+section=commands
+caption=Stata Helper\Execute current text
+method=exec_file
+lexers=Stata
+hotkey=Ctrl+D
+
