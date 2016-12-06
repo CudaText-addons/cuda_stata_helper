@@ -61,6 +61,22 @@ def do_quote_selected(quote1, quote2):
           y1)
         return True
 
+def get_stata_block():        
+    x0, y0, x1, y1 = ed.get_carets()[0]
+        
+    y_st = y0
+    while (y_st>=0) and (ed.get_text_line(y_st)!=BREAK_LINE):
+        y_st -= 1
+        
+    y_end = y0
+    while (y_end<ed.get_line_count()) and (ed.get_text_line(y_end)!=BREAK_LINE):
+        y_end += 1
+            
+    return ed.get_text_substr(
+             0, 
+             y_st+1,
+             len(ed.get_text_line(y_end-1)), 
+             y_end-1)
 
 
 class Command:
@@ -78,18 +94,7 @@ class Command:
     def exec_block(self):
         #dont allow sel
         if ed.get_text_sel(): return
-        x0, y0, x1, y1 = ed.get_carets()[0]
-        
-        y_st = y0
-        while (y_st>=0) and (ed.get_text_line(y_st)!=BREAK_LINE):
-            y_st -= 1
-        
-        y_end = y0
-        while (y_end<ed.get_line_count()-1) and (ed.get_text_line(y_end)!=BREAK_LINE):
-            y_end += 1
-            
-        s = ed.get_text_substr(0, y_st+1, 0, y_end)
-        do_stata_exec(s)
+        do_stata_exec(get_stata_block())
         
 
     def exec_cur(self):
