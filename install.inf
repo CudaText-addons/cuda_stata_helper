@@ -15,7 +15,7 @@ keys=192
 [item2]
 section=commands
 caption=Stata Helper\Execute current text
-method=exec_file
+method=exec_cur
 lexers=Stata
 
 [item4]

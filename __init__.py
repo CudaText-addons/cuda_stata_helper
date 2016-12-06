@@ -37,6 +37,10 @@ def get_stata_version():
     return((int(version), "com.stata.stata{}".format(version)))
 
 def do_stata_exec(s):
+    if not s:
+        msg_status('Cannot run empty text')
+        return
+    msg_status('Running in Stata')
     print('todo: execute Stata text: "'+s+'"')
 
 
@@ -88,7 +92,7 @@ class Command:
         do_stata_exec(s)
         
 
-    def exec_file(self):
+    def exec_cur(self):
         x0, y0, x1, y1 = ed.get_carets()[0]
         #selected
         s = ed.get_text_sel()
