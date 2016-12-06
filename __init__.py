@@ -35,6 +35,25 @@ def get_stata_version():
     return((int(version), "com.stata.stata{}".format(version)))
 
 
+def do_quote_selected(quote1, quote2):
+    s = ed.get_text_sel()
+    if s:
+        x0, y0, x1, y1 = ed.get_carets()[0]
+        #reverse-select: swap coord
+        if (y0, x0)>(y1, x1):
+            x0, y0, x1, y1 = x1, y1, x0, y0
+        s = quote1+s+quote2
+        ed.delete(x0, y0, x1, y1)
+        ed.insert(x0, y0, s)
+        ed.set_caret(
+          x0+len(quote1), 
+          y0, 
+          x1+(len(quote1) if y1==y0 else 0), 
+          y1)
+        return True
+
+
+
 class Command:
 
     def exec_file(self):
@@ -51,14 +70,5 @@ class Command:
     def on_key(self, ed_self, key, state):
         #tick-char
         if key==192:
-            s = ed.get_text_sel()
-            if s:
-                x0, y0, x1, y1 = ed.get_carets()[0]
-                #reverse-select: swap coord
-                if (y0, x0)>(y1, x1):
-                    x0, y0, x1, y1 = x1, y1, x0, y0
-                s = '`'+s+"'"
-                ed.delete(x0, y0, x1, y1)
-                ed.insert(x0, y0, s)
-                ed.set_caret(x0+1, y0, x1+1, y1) #sel inside ticks
-            return False #block char
+            if do_quote_selected('`', "'"):
+                return False #block char
