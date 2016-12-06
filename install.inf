@@ -17,3 +17,15 @@ section=commands
 caption=Stata Helper\Execute current text
 method=exec_file
 lexers=Stata
+
+[item4]
+section=commands
+caption=Stata Helper\Execute block between break-lines
+method=exec_block
+lexers=Stata
+
+[item5]
+section=commands
+caption=Stata Helper\Insert break-line
+method=ins_break_line
+lexers=Stata

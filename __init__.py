@@ -3,6 +3,8 @@ import subprocess
 from cudatext import *
 
 
+BREAK_LINE = '/* ------ break line ------ (by Stata Helper) */'
+
 def get_stata_version():
     '''
     based on the Stata Enhanced - https://github.com/andrewheiss/SublimeStataEnhanced/
@@ -34,6 +36,9 @@ def get_stata_version():
     version = version.decode("utf-8").strip()
     return((int(version), "com.stata.stata{}".format(version)))
 
+def do_stata_exec(s):
+    print('todo: execute Stata text: "'+s+'"')
+
 
 def do_quote_selected(quote1, quote2):
     s = ed.get_text_sel()
@@ -56,6 +61,33 @@ def do_quote_selected(quote1, quote2):
 
 class Command:
 
+    def ins_break_line(self):
+        #cannot do with select
+        if ed.get_text_sel(): return
+        
+        x0, y0, x1, y1 = ed.get_carets()[0]
+        ed.insert(0, y0, BREAK_LINE+'\n')
+        ed.set_caret(0, y0+1)
+        msg_status('Inserted break-line')
+
+
+    def exec_block(self):
+        #dont allow sel
+        if ed.get_text_sel(): return
+        x0, y0, x1, y1 = ed.get_carets()[0]
+        
+        y_st = y0
+        while (y_st>=0) and (ed.get_text_line(y_st)!=BREAK_LINE):
+            y_st -= 1
+        
+        y_end = y0
+        while (y_end<ed.get_line_count()-1) and (ed.get_text_line(y_end)!=BREAK_LINE):
+            y_end += 1
+            
+        s = ed.get_text_substr(0, y_st+1, 0, y_end)
+        do_stata_exec(s)
+        
+
     def exec_file(self):
         x0, y0, x1, y1 = ed.get_carets()[0]
         #selected
@@ -63,9 +95,8 @@ class Command:
         if not s:
             #curr line
             s = ed.get_text_line(y0)
-        #debug
-        print('todo: execute Stata text:')
-        print(s)
+        do_stata_exec(s)
+        
         
     def on_key(self, ed_self, key, state):
         #tick-char
