@@ -102,8 +102,15 @@ class Command:
         do_stata_exec(s)
         
         
+    def quote_tick(self):
+        do_quote_selected('`', "'")
+
+    def quote_var(self):
+        do_quote_selected('${', "}")
+
     def on_key(self, ed_self, key, state):
         #tick-char
         if key==192:
             if do_quote_selected('`', "'"):
                 return False #block char
+

@@ -29,3 +29,21 @@ section=commands
 caption=Stata Helper\Insert break-line
 method=ins_break_line
 lexers=Stata
+
+[item10]
+section=commands
+caption=Stata Helper\-
+method=_
+lexers=Stata
+
+[item11]
+section=commands
+caption=Stata Helper\Make selected as `word'
+method=quote_tick
+lexers=Stata
+
+[item12]
+section=commands
+caption=Stata Helper\Make selected as ${word}
+method=quote_var
+lexers=Stata
